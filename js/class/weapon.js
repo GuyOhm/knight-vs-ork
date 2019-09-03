@@ -2,8 +2,9 @@
 * Class that represents a weapon
 */
 export default class Weapon {
-    constructor(row, col) {
-        this.row = row;
-        this.col = col;
+    constructor(name, damage, cssClass) {
+        this.name = name;
+        this.damage = damage;
+        this.cssClass = cssClass;
     }
 }
