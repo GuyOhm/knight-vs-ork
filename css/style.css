@@ -14,3 +14,19 @@
     height: 10vh;
     width: 10vh;
 }
+
+.wall {
+    background-color: black;
+}
+
+.player1 {
+    background-color: blue;
+}
+
+.player2 {
+    background-color: red;
+}
+
+.katana, .axe, .chainsaw {
+    background-color: grey;
+}
