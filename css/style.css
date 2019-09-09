@@ -11,4 +11,6 @@
 
 .col {
     border: 1px lightgray solid;
+    height: 10vh;
+    width: 10vh;
 }
