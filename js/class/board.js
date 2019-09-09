@@ -27,7 +27,8 @@ export default class Board {
             for(let j = 0; j < size; j++) {
                 const row = i;
                 const col = j;
-                squares.push(new Square(row, col, null));
+                const div = `.row[id='${row}'] .col[id='${col}']`;
+                squares.push(new Square(row, col, div));
                 const colDiv = document.createElement('div');
                 colDiv.classList.add('col');
                 colDiv.id = j;
