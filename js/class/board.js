@@ -17,13 +17,11 @@ export default class Board {
     generateGrid(size) {
         const squares = [];
         const body = document.querySelector('body');
-        const screenSize = (window.innerWidth < window.innerHeight) ? window.innerWidth : window.innerHeight;
         // Add a row to the page
         for(let i = 0; i < size; i++) {
             const rowDiv = document.createElement('div');
             rowDiv.classList.add('row');
             rowDiv.id = i;
-            rowDiv.style.height = screenSize / size + 'px';
             body.appendChild(rowDiv);
             // Add columns to the row
             for(let j = 0; j < size; j++) {
@@ -34,7 +32,6 @@ export default class Board {
                 colDiv.classList.add('col');
                 colDiv.id = j;
                 rowDiv.appendChild(colDiv);
-                colDiv.style.width = screenSize / size + 'px';
             }
         }
         return squares;
