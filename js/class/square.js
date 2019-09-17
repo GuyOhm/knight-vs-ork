@@ -10,7 +10,24 @@ export default class Square {
         this.weapon = null;
         this.player = null;
     }
+
+    /*
+    * This functions refreshes the css classes of the square depending on its properties
+    */
     refresh() {
-        // function that refreshes the prop of the square
+        // reinit the class attribute
+        this.div.className = 'col';
+        // add weapon class to class list if there is a weapon
+        if (this.weapon !== null) {
+            this.div.classList.add(this.weapon.cssClass);
+        }
+        // add player class to class list if there is a player
+        if (this.player !== null) {
+            this.div.classList.add(this.player.cssClass);
+        }
+        // add wall class to class list if there is a wall
+        if (this.isWall === true) {
+            this.div.classList.add('wall');
+        }
     }
 }
