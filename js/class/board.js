@@ -43,23 +43,49 @@ export default class Board {
         return this.squares[row * this.size + col];
     }
     
-    // This function randomly picks an element of an array and pops it
-    // @param {integer[]} array
-    // @return {integer} elt - the randomly picked element
-    pickAndPop(array) {
+    /*
+    * This function randomly picks an element of an array and pops it
+    * @param {integer[]} array
+    * @param {boolean} pop - do we want to pop the element from the array
+    * @return {integer} elt - the randomly picked element
+    */
+    pickAndPop(array, pop) {
+        pop = pop === undefined ? true : pop;
         const randomIdx = Math.floor(Math.random() * array.length);
         const elt = array[randomIdx];
-        array.splice(randomIdx, 1);
+        if(pop) {
+            array.splice(randomIdx, 1);
+        }
         return elt;
     }
-    
+
+    areSquaresNearby(square1, square2) {
+        return Math.abs(square1.col - square2.col) <= 1 && Math.abs(square1.row - square2.row) <= 1;
+    }
+
+    /* 
+    * This function places randomly players on the board
+    * @param {Player} players
+    * @param {Square[]} squaresCopy
+    */
     placePlayers(players, squaresCopy) {
-        // Place randomly 2 players on the board
-        for (let player of players) {
-            const square = this.pickAndPop(squaresCopy);
-            square.player = player;
-            square.refresh();
+        const square = this.pickAndPop(squaresCopy);
+        // facto (Player)
+        square.player = players[0];
+        players[0].square = square;
+        square.refresh();
+        //
+        let otherSquare = this.pickAndPop(squaresCopy, false);
+        while(this.areSquaresNearby(square, otherSquare)) {
+            otherSquare = this.pickAndPop(squaresCopy, false);
         }
+        const index = squaresCopy.indexOf(otherSquare);
+        squaresCopy.splice(index, 1);
+        // facto
+        otherSquare.player = players[1];
+        players[1].square = otherSquare;
+        otherSquare.refresh();
+        //
     }
     
     placeWeapons(weapons, squaresCopy) {
