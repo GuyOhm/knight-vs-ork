@@ -46,7 +46,7 @@ export default class Board {
     /*
     * This function randomly picks an element of an array and pops it
     * @param {integer[]} array
-    * @param {boolean} pop - do we want to pop the element from the array
+    * @param {boolean} pop - do we want to pop the element from the array (optional)
     * @return {integer} elt - the randomly picked element
     */
     pickAndPop(array, pop) {
@@ -59,6 +59,15 @@ export default class Board {
         return elt;
     }
 
+    /*
+    * This function checks if 2 squares are nearby
+    * @param {Square} square1 - the first square
+    * @param {Square} square2 - the second square
+    * @return {boolean} - true if squares are nearby, false otherwise
+    * 
+    * The squares are nearby (horizontally, verticaly or diagonally) if their coordinates are different from 1 or -1
+    * as a consequence if the absolute value of their substraction is <= to 1
+    */
     areSquaresNearby(square1, square2) {
         return Math.abs(square1.col - square2.col) <= 1 && Math.abs(square1.row - square2.row) <= 1;
     }
@@ -70,22 +79,18 @@ export default class Board {
     */
     placePlayers(players, squaresCopy) {
         const square = this.pickAndPop(squaresCopy);
-        // facto (Player)
-        square.player = players[0];
-        players[0].square = square;
-        square.refresh();
-        //
+        // Place the first player
+        players[0].placeOn(square);
         let otherSquare = this.pickAndPop(squaresCopy, false);
+        // Pick anoter square as long as it's nearby
         while(this.areSquaresNearby(square, otherSquare)) {
             otherSquare = this.pickAndPop(squaresCopy, false);
         }
+        // Pop the second square once we know it is not nearby
         const index = squaresCopy.indexOf(otherSquare);
         squaresCopy.splice(index, 1);
-        // facto
-        otherSquare.player = players[1];
-        players[1].square = otherSquare;
-        otherSquare.refresh();
-        //
+        // Place the second player
+        players[1].placeOn(otherSquare);
     }
     
     placeWeapons(weapons, squaresCopy) {
