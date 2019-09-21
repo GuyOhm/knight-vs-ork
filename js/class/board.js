@@ -93,6 +93,11 @@ export default class Board {
         players[1].placeOn(otherSquare);
     }
     
+    /* 
+    * This function places randomly weapons on the board
+    * @param {Weapon} weapons
+    * @param {Square[]} squaresCopy
+    */
     placeWeapons(weapons, squaresCopy) {
         for (let weapon of weapons) {
             const square = this.pickAndPop(squaresCopy);
@@ -101,6 +106,11 @@ export default class Board {
         }
     }
     
+    /* 
+    * This function places randomly walls on the board
+    * @param {interger} nbOfWalls
+    * @param {Square[]} squaresCopy
+    */
     placeWalls(nbOfWalls, squaresCopy) {
         for (let i = 0; i < nbOfWalls; i++) {
             const square = this.pickAndPop(squaresCopy);

@@ -18,6 +18,9 @@ export default class Game {
         this.nbOfWalls = 12;
     }
 
+    /*
+    * This method initialize the game by placing players, weapons and walls onto the board
+    */
     init() {
         const squaresCopy = this.board.squares.slice(0);
         this.board.placePlayers(this.players, squaresCopy);
