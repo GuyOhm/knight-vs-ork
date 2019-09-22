@@ -16,18 +16,18 @@ export default class Square {
     */
     refresh() {
         // reinit the class attribute
-        this.div.className = 'col';
+        this.div.attr('class', 'col');
         // add weapon class to class list if there is a weapon
         if (this.weapon !== null) {
-            this.div.classList.add(this.weapon.cssClass);
+            this.div.addClass(this.weapon.cssClass);
         }
         // add player class to class list if there is a player
         if (this.player !== null) {
-            this.div.classList.add(this.player.cssClass);
+            this.div.addClass(this.player.cssClass);
         }
         // add wall class to class list if there is a wall
         if (this.isWall === true) {
-            this.div.classList.add('wall');
+            this.div.addClass('wall');
         }
     }
 }
