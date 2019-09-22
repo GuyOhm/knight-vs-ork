@@ -16,20 +16,20 @@ export default class Board {
     */ 
     generateGrid(size) {
         const squares = [];
-        const body = document.querySelector('body');
+        const body = $('body');
         // Add a row to the page
         for(let i = 0; i < size; i++) {
-            const rowDiv = document.createElement('div');
-            rowDiv.classList.add('row');
-            body.appendChild(rowDiv);
+            const rowDiv = $(document.createElement('div'));
+            rowDiv.addClass('row');
+            body.append(rowDiv);
             // Add columns to the row
             for(let j = 0; j < size; j++) {
                 const row = i;
                 const col = j;
-                const div = document.createElement('div');
-                div.classList.add('col');
+                const div = $(document.createElement('div'));
+                div.addClass('col');
                 squares.push(new Square(row, col, div));
-                rowDiv.appendChild(div);
+                rowDiv.append(div);
             }
         }
         return squares;
