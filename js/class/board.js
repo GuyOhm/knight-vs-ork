@@ -7,6 +7,7 @@ export default class Board {
     constructor(size) {
         this.size = size;
         this.squares = this.generateGrid(size);
+        this.players = null;
     }
     
     /*
@@ -19,15 +20,13 @@ export default class Board {
         const body = $('body');
         // Add a row to the page
         for(let i = 0; i < size; i++) {
-            const rowDiv = $(document.createElement('div'));
-            rowDiv.addClass('row');
+            const rowDiv = $('<div class="row"></div>');
             body.append(rowDiv);
             // Add columns to the row
             for(let j = 0; j < size; j++) {
                 const row = i;
                 const col = j;
-                const div = $(document.createElement('div'));
-                div.addClass('col');
+                const div = $('<div class="col"></div>');
                 squares.push(new Square(row, col, div));
                 rowDiv.append(div);
             }
@@ -36,21 +35,15 @@ export default class Board {
     }
     
     /*
-    *
-    */
-    getSquare(row, col) {
-        // TODO: check if square exists, if not return null
-        return this.squares[row * this.size + col];
-    }
-    
-    /*
     * This function randomly picks an element of an array and pops it
-    * @param {integer[]} array
+    * @param {array} array
     * @param {boolean} pop - do we want to pop the element from the array (optional)
-    * @return {integer} elt - the randomly picked element
+    * @return elt - the randomly picked element
     */
     pickAndPop(array, pop) {
+        // If there's no argument for pop set it to true
         pop = pop === undefined ? true : pop;
+        // Generate a random index within the limit of the array length
         const randomIdx = Math.floor(Math.random() * array.length);
         const elt = array[randomIdx];
         if(pop) {
@@ -117,5 +110,156 @@ export default class Board {
             square.isWall = true;
             square.refresh();
         }
+    }
+
+    /*
+    * This function get a Square from its row and col
+    * @param {interger} row
+    * @param {interger} col
+    * @return {Square}
+    */
+    getSquare(row, col) {
+        // Check if square exists, if not return null
+        if (row * col < 0 ||
+            row > this.size - 1 ||
+            col > this.size - 1) {
+            return null;
+        }
+        return this.squares[row * this.size + col];
+    }
+
+    /*
+    * This function iterates towards a direction and find the accessibles squares from the initial square
+    * @param {Square} square - the initial square
+    * @param {integer} distance - how far from the initial position we want to go
+    * @param {{row:integer, col:integer}} direction - an object that represents a vector
+    * @return {Square[]} accessibleSquares
+    */
+    getAccessibleSquaresInDirection(square, distance, direction) {
+        const accessibleSquares = [];
+        for(let i = 1; i < distance + 1; i++) {
+            const nextSquare = this.getSquare(square.row + direction.row * i, square.col + direction.col * i);
+            if(nextSquare !== null && nextSquare.isWall === false && nextSquare.player === null) {
+                accessibleSquares.push(nextSquare);
+            } else {
+                break;
+            }
+        }
+        return accessibleSquares;
+    }
+
+    /*
+    * This function iterates towards all directions and find the accessibles squares from the initial square
+    * @param {Square} square - the initial square
+    * @param {integer} distance - how far from the initial position we want to go
+    * @return {Square[]} accessibleSquares
+    */
+    getAccessibleSquares(square, distance) {
+        const accessibleSquares = [];
+        // Declare vector objects for the 4 directions (right, left, downwards, upwards)
+        const directions = [{row: 0, col: 1}, {row: 0, col: -1}, {row: 1, col: 0}, {row: -1, col: 0}];
+        for(let direction of directions) {
+            // Concatenate array of squares from each direction at each iteration
+            accessibleSquares.splice(-1, 0, ...this.getAccessibleSquaresInDirection(square, distance, direction));
+        }
+        console.log(accessibleSquares);
+        return accessibleSquares;
+    }
+
+    /*
+    * This function highlights accessibles squares for a player to move to and set an event listener on each of them.
+    * When a square is clicked 
+    * @param {Player} player
+    */
+    showPossibleMoves(player) {
+        const initialSquare = player.square;
+        const accessibleSquares = this.getAccessibleSquares(initialSquare, 3);
+        for(let square of accessibleSquares) {
+            square.isAccessible = true;
+            square.refresh();
+            square.div.on('click', () => {
+                player.move(square);
+                this.cleanSquares(accessibleSquares);
+                this.swapWeaponsIfAny(initialSquare, square, player);
+                this.showPossibleMoves(this.swapPlayer(player));
+            });
+        }
+    }
+
+    /*
+    * This function cleans highlighted squares
+    * @param {Square[]} accessibleSquares
+    */
+    cleanSquares(accessibleSquares) {
+        for(let square of accessibleSquares) {
+            square.isAccessible = false;
+            square.div.toggleClass('showMove');
+            square.div.off('click');
+        }
+    }
+
+    /*
+    * This function allows to swap weapons when a player is passing over another weapon.
+    * @param {Square} initialSquare
+    * @param {Square} destinationSquare
+    * @param {Player} player
+    */
+    swapWeaponsIfAny(initialSquare, destinationSquare, player) {
+        const crossedSquares = this.getCrossedSquares(initialSquare, destinationSquare);
+        // Iterate over crossed squares and if swap weapons if any
+        for(let square of crossedSquares) {
+            if(square.weapon !== null) {
+                const previousWeapon = player.weapon;
+                const nextWeapon = square.weapon;
+                player.weapon = nextWeapon;
+                square.weapon = previousWeapon;
+                square.refresh();
+            }
+        }
+
+    }
+
+    /*
+    * This function gets all squares a player crossed when moving from one square to another
+    * @param {Square} initialSquare
+    * @param {Square} destinationSquare
+    * @return {Square[]} crossedSquares
+    */
+    getCrossedSquares(initialSquare, destinationSquare) {
+        const crossedSquares = [];
+        // Determine the moving vector
+        const vector = {
+            row: destinationSquare.row - initialSquare.row,
+            col: destinationSquare.col - initialSquare.col
+        };
+        // Iterate n times, n being the distance
+        for(let i = 1; i < Math.abs(vector.row + vector.col) + 1; i++) {
+            // if the moving is right
+            if(vector.row === 0 && vector.col > 0) {
+                crossedSquares.push(this.getSquare(initialSquare.row, initialSquare.col + i));
+            }
+            // if the moving is left
+            else if(vector.row === 0 && vector.col < 0) {
+                crossedSquares.push(this.getSquare(initialSquare.row, initialSquare.col - i));
+            }
+            // if the moving is downwards
+            else if(vector.col === 0 && vector.row > 0) {
+                crossedSquares.push(this.getSquare(initialSquare.row + i, initialSquare.col));
+            }
+            // if the moving is upwards
+            else if(vector.col === 0 && vector.row < 0) {
+                crossedSquares.push(this.getSquare(initialSquare.row - i, initialSquare.col));
+            }
+        }
+        return crossedSquares;
+    }
+
+    /*
+    * This function returns the other player than the one who is passed by argument
+    * @param {Player} player
+    * @retun {Player} - the other player
+    */
+    swapPlayer(player) {
+        return player === this.players[0] ? this.players[1] : this.players[0];
     }
 }
