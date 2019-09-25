@@ -19,6 +19,10 @@
     background-color: black;
 }
 
+.katana, .axe, .chainsaw, .knife {
+    background-color: grey;
+}
+
 .player1 {
     background-color: blue;
 }
@@ -27,6 +31,8 @@
     background-color: red;
 }
 
-.katana, .axe, .chainsaw, .knife {
-    background-color: grey;
+
+.showMove {
+    border: 1px black solid;
+    box-shadow: 0px 0px 12px grey;
 }
