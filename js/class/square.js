@@ -9,6 +9,7 @@ export default class Square {
         this.isWall = false;
         this.weapon = null;
         this.player = null;
+        this.isAccessible = false;
     }
 
     /*
@@ -26,8 +27,11 @@ export default class Square {
             this.div.addClass(this.player.cssClass);
         }
         // add wall class to class list if there is a wall
-        if (this.isWall === true) {
+        if (this.isWall) {
             this.div.addClass('wall');
+        }
+        if(this.isAccessible) {
+            this.div.addClass('showMove');
         }
     }
 }
