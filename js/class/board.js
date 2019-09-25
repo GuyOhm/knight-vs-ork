@@ -162,7 +162,6 @@ export default class Board {
             // Concatenate array of squares from each direction at each iteration
             accessibleSquares.splice(-1, 0, ...this.getAccessibleSquaresInDirection(square, distance, direction));
         }
-        console.log(accessibleSquares);
         return accessibleSquares;
     }
 
