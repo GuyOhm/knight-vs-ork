@@ -20,4 +20,16 @@ export default class Player {
         this.square = square;
         square.refresh();
     }
+
+    /*
+    * This functions moves a player from one square to another
+    */
+    move(destinationSquare) {
+        const previousSquare = this.square;
+        this.square = destinationSquare;
+        this.square.player = this;
+        previousSquare.player = null;
+        previousSquare.refresh();
+        this.square.refresh();
+    }
 }
