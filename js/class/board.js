@@ -7,7 +7,6 @@ export default class Board {
     constructor(size) {
         this.size = size;
         this.squares = this.generateGrid(size);
-        this.players = null;
     }
     
     /*
@@ -170,7 +169,7 @@ export default class Board {
     * When a square is clicked 
     * @param {Player} player
     */
-    showPossibleMoves(player) {
+    showPossibleMoves(player, nextPlayer) {
         const initialSquare = player.square;
         const accessibleSquares = this.getAccessibleSquares(initialSquare, 3);
         for(let square of accessibleSquares) {
@@ -180,7 +179,7 @@ export default class Board {
                 player.move(square);
                 this.cleanSquares(accessibleSquares);
                 this.swapWeaponsIfAny(initialSquare, square, player);
-                this.showPossibleMoves(this.swapPlayer(player));
+                this.showPossibleMoves(nextPlayer, player);
             });
         }
     }
@@ -192,7 +191,7 @@ export default class Board {
     cleanSquares(accessibleSquares) {
         for(let square of accessibleSquares) {
             square.isAccessible = false;
-            square.div.toggleClass('showMove');
+            square.refresh();
             square.div.off('click');
         }
     }
@@ -215,7 +214,6 @@ export default class Board {
                 square.refresh();
             }
         }
-
     }
 
     /*
@@ -231,34 +229,14 @@ export default class Board {
             row: destinationSquare.row - initialSquare.row,
             col: destinationSquare.col - initialSquare.col
         };
+        const unitVector = {
+            row: Math.sign(vector.row),
+            col: Math.sign(vector.col)
+        };
         // Iterate n times, n being the distance
         for(let i = 1; i < Math.abs(vector.row + vector.col) + 1; i++) {
-            // if the moving is right
-            if(vector.row === 0 && vector.col > 0) {
-                crossedSquares.push(this.getSquare(initialSquare.row, initialSquare.col + i));
-            }
-            // if the moving is left
-            else if(vector.row === 0 && vector.col < 0) {
-                crossedSquares.push(this.getSquare(initialSquare.row, initialSquare.col - i));
-            }
-            // if the moving is downwards
-            else if(vector.col === 0 && vector.row > 0) {
-                crossedSquares.push(this.getSquare(initialSquare.row + i, initialSquare.col));
-            }
-            // if the moving is upwards
-            else if(vector.col === 0 && vector.row < 0) {
-                crossedSquares.push(this.getSquare(initialSquare.row - i, initialSquare.col));
-            }
+            crossedSquares.push(this.getSquare(initialSquare.row + unitVector.row * i, initialSquare.col + unitVector.col * i));
         }
         return crossedSquares;
-    }
-
-    /*
-    * This function returns the other player than the one who is passed by argument
-    * @param {Player} player
-    * @retun {Player} - the other player
-    */
-    swapPlayer(player) {
-        return player === this.players[0] ? this.players[1] : this.players[0];
     }
 }
