@@ -26,10 +26,9 @@ export default class Game {
         this.board.placePlayers(this.players, squaresCopy);
         this.board.placeWeapons(this.weapons, squaresCopy);
         this.board.placeWalls(this.nbOfWalls, squaresCopy);
-        this.board.players = this.players;
     }
 
     start() {
-        this.board.showPossibleMoves(this.players[0]);
+        this.board.showPossibleMoves(this.players[0], this.players[1]);
     }
 }
