@@ -1,6 +1,6 @@
 import Weapon from './weapon.js';
 
-/*
+/**
 * Class that represents a player
 */
 export default class Player {
@@ -11,7 +11,7 @@ export default class Player {
         this.weapon = new Weapon('Knife', 10, 'knife');
     }
 
-    /*
+    /**
     * This function display a player on a square by updating both player and square and refreshing the square
     * @param {Square} square - the square we want to place the player on
     */
@@ -21,7 +21,7 @@ export default class Player {
         square.refresh();
     }
 
-    /*
+    /**
     * This functions moves a player from one square to another
     */
     move(destinationSquare) {

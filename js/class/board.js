@@ -1,6 +1,6 @@
 import Square from './square.js';
 
-/*
+/**
 * Class that represents the board
 */
 export default class Board {
@@ -9,7 +9,7 @@ export default class Board {
         this.squares = this.generateGrid(size);
     }
     
-    /*
+    /**
     * This function generates a grid and an array of Squares based on the size
     * @param {integer} size - Size of the board
     * @return {Square[]} squares - Array of Squares
@@ -33,7 +33,7 @@ export default class Board {
         return squares;
     }
     
-    /*
+    /**
     * This function randomly picks an element of an array and pops it
     * @param {array} array
     * @param {boolean} pop - do we want to pop the element from the array (optional)
@@ -51,7 +51,7 @@ export default class Board {
         return elt;
     }
 
-    /*
+    /**
     * This function checks if 2 squares are nearby
     * @param {Square} square1 - the first square
     * @param {Square} square2 - the second square
@@ -64,7 +64,7 @@ export default class Board {
         return Math.abs(square1.col - square2.col) <= 1 && Math.abs(square1.row - square2.row) <= 1;
     }
 
-    /* 
+    /** 
     * This function places randomly players on the board
     * @param {Player} players
     * @param {Square[]} squaresCopy
@@ -85,7 +85,7 @@ export default class Board {
         players[1].placeOn(otherSquare);
     }
     
-    /* 
+    /** 
     * This function places randomly weapons on the board
     * @param {Weapon} weapons
     * @param {Square[]} squaresCopy
@@ -98,7 +98,7 @@ export default class Board {
         }
     }
     
-    /* 
+    /** 
     * This function places randomly walls on the board
     * @param {interger} nbOfWalls
     * @param {Square[]} squaresCopy
@@ -111,7 +111,7 @@ export default class Board {
         }
     }
 
-    /*
+    /**
     * This function get a Square from its row and col
     * @param {interger} row
     * @param {interger} col
@@ -127,7 +127,7 @@ export default class Board {
         return this.squares[row * this.size + col];
     }
 
-    /*
+    /**
     * This function iterates towards a direction and find the accessibles squares from the initial square
     * @param {Square} square - the initial square
     * @param {integer} distance - how far from the initial position we want to go
@@ -147,7 +147,7 @@ export default class Board {
         return accessibleSquares;
     }
 
-    /*
+    /**
     * This function iterates towards all directions and find the accessibles squares from the initial square
     * @param {Square} square - the initial square
     * @param {integer} distance - how far from the initial position we want to go
@@ -164,7 +164,7 @@ export default class Board {
         return accessibleSquares;
     }
 
-    /*
+    /**
     * This function highlights accessibles squares for a player to move to and set an event listener on each of them.
     * When a square is clicked 
     * @param {Player} player
@@ -184,7 +184,7 @@ export default class Board {
         }
     }
 
-    /*
+    /**
     * This function cleans highlighted squares
     * @param {Square[]} accessibleSquares
     */
@@ -196,7 +196,7 @@ export default class Board {
         }
     }
 
-    /*
+    /**
     * This function allows to swap weapons when a player is passing over another weapon.
     * @param {Square} initialSquare
     * @param {Square} destinationSquare
@@ -216,7 +216,7 @@ export default class Board {
         }
     }
 
-    /*
+    /**
     * This function gets all squares a player crossed when moving from one square to another
     * @param {Square} initialSquare
     * @param {Square} destinationSquare
@@ -233,8 +233,9 @@ export default class Board {
             row: Math.sign(vector.row),
             col: Math.sign(vector.col)
         };
+        const distanceCrossed = Math.abs(vector.row + vector.col);
         // Iterate n times, n being the distance
-        for(let i = 1; i < Math.abs(vector.row + vector.col) + 1; i++) {
+        for(let i = 1; i < distanceCrossed + 1; i++) {
             crossedSquares.push(this.getSquare(initialSquare.row + unitVector.row * i, initialSquare.col + unitVector.col * i));
         }
         return crossedSquares;

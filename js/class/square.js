@@ -1,4 +1,4 @@
-/*
+/**
 * Class that represents a square of the board
 */ 
 export default class Square {
@@ -12,7 +12,7 @@ export default class Square {
         this.isAccessible = false;
     }
 
-    /*
+    /**
     * This functions refreshes the css classes of the square depending on its properties
     */
     refresh() {

@@ -1,4 +1,4 @@
-/*
+/**
 * Class that represents a weapon
 */
 export default class Weapon {

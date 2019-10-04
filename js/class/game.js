@@ -18,7 +18,7 @@ export default class Game {
         this.nbOfWalls = 12;
     }
 
-    /*
+    /**
     * This method initialize the game by placing players, weapons and walls onto the board
     */
     init() {
