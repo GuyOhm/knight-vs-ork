@@ -1,0 +1,29 @@
+{
+  "name": "shootout",
+  "version": "1.0.0",
+  "description": "Turn based board game.",
+  "main": "shootout.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/esdoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuyOhm/shootout.git"
+  },
+  "keywords": [
+    "game",
+    "openclassrooms",
+    "board"
+  ],
+  "author": "Guillaume Ricciuti with the help of Julien Sosthène :)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuyOhm/shootout/issues"
+  },
+  "homepage": "https://github.com/GuyOhm/shootout#readme",
+  "devDependencies": {
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0"
+  }
+}
