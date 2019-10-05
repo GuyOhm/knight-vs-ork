@@ -16,19 +16,68 @@
 }
 
 .wall {
-    background-color: black;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url("/assets/img/wall/subtle_orange_emboss.png");
 }
 
-.katana, .axe, .chainsaw, .knife {
-    background-color: grey;
+.dagger {
+    background-image:
+        url("/assets/img/weapons/dagger.png"),
+        radial-gradient(circle at center, orange 0%, transparent 80%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.player1 {
-    background-color: blue;
+.sword {
+    background-image: 
+        url("/assets/img/weapons/sword.png"),
+        radial-gradient(circle at center, orange 0%, transparent 80%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.player2 {
-    background-color: red;
+.axe {
+    background-image:
+        url("/assets/img/weapons/axe.png"),
+        radial-gradient(circle at center, orange 0%, transparent 80%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hammer {
+    background-image:
+        url("/assets/img/weapons/hammer.png"),
+        radial-gradient(circle at center, orange 0%, transparent 80%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.double-axe {
+    background-image:
+        url("/assets/img/weapons/axeDouble.png"),
+        radial-gradient(circle at center, orange 0%, transparent 80%);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.knight {
+    background-image: url("/assets/img/knight/_IDLE/_IDLE_000.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.orc {
+    background-image: url("/assets/img/ork/IDLE/IDLE_000.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 

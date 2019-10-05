@@ -16,11 +16,11 @@ export default class Board {
     */ 
     generateGrid(size) {
         const squares = [];
-        const body = $('body');
+        const board = $('#board');
         // Add a row to the page
         for(let i = 0; i < size; i++) {
             const rowDiv = $('<div class="row"></div>');
-            body.append(rowDiv);
+            board.append(rowDiv);
             // Add columns to the row
             for(let j = 0; j < size; j++) {
                 const row = i;

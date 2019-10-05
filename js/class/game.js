@@ -6,14 +6,14 @@ export default class Game {
     constructor () {
         this.board = new Board(10);
         this.players = [
-            new Player(null, 'player1'),
-            new Player(null, 'player2')
+            new Player(null, 'knight'),
+            new Player(null, 'orc')
         ];
         this.weapons = [
-            new Weapon('Katana', 13, 'katana'),
-            new Weapon('Knife', 10, 'knife'),
-            new Weapon('Chainsaw', 17, 'chainsaw'),
-            new Weapon('Axe', 15, 'axe')
+            new Weapon('Sword', 13, 'sword'),
+            new Weapon('Axe', 15, 'axe'),
+            new Weapon('Hammer', 17, 'hammer'),
+            new Weapon('Double Axe', 21, 'double-axe')
         ];
         this.nbOfWalls = 12;
     }

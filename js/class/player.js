@@ -8,7 +8,7 @@ export default class Player {
         this.square = square;
         this.cssClass = cssClass;
         this.life = 100;
-        this.weapon = new Weapon('Knife', 10, 'knife');
+        this.weapon = new Weapon('Dagger', 10, 'dagger');
     }
 
     /**
