@@ -16,7 +16,7 @@ export default class Board {
     */ 
     generateGrid(size) {
         const squares = [];
-        const board = $('#board');
+        const board = $('.board');
         // Add a row to the page
         for(let i = 0; i < size; i++) {
             const rowDiv = $('<div class="row"></div>');
@@ -119,7 +119,7 @@ export default class Board {
     */
     getSquare(row, col) {
         // Check if square exists, if not return null
-        if (row * col < 0 ||
+        if (row < 0 || col < 0 ||
             row > this.size - 1 ||
             col > this.size - 1) {
             return null;
@@ -138,8 +138,8 @@ export default class Board {
         const accessibleSquares = [];
         for(let i = 1; i < distance + 1; i++) {
             const nextSquare = this.getSquare(square.row + direction.row * i, square.col + direction.col * i);
-            if(nextSquare !== null && nextSquare.isWall === false && nextSquare.player === null) {
-                accessibleSquares.push(nextSquare);
+            if(nextSquare !== null && nextSquare.isWall === false && nextSquare.player === null) {
+                    accessibleSquares.push(nextSquare);
             } else {
                 break;
             }
@@ -170,18 +170,27 @@ export default class Board {
     * @param {Player} player
     */
     showPossibleMoves(player, nextPlayer) {
-        const initialSquare = player.square;
-        const accessibleSquares = this.getAccessibleSquares(initialSquare, 3);
-        for(let square of accessibleSquares) {
-            square.isAccessible = true;
-            square.refresh();
-            square.div.on('click', () => {
-                player.move(square);
-                this.cleanSquares(accessibleSquares);
-                this.swapWeaponsIfAny(initialSquare, square, player);
-                this.showPossibleMoves(nextPlayer, player);
-            });
+        if(!this.areSquaresNearby(player.square, nextPlayer.square)) {
+            const initialSquare = player.square;
+            const accessibleSquares = this.getAccessibleSquares(initialSquare, 3);
+            for(let square of accessibleSquares) {
+                square.isAccessible = true;
+                square.refresh();
+                square.div.on('click', () => {
+                    player.move(square);
+                    this.cleanSquares(accessibleSquares);
+                    this.swapWeaponsIfAny(initialSquare, square, player);
+                    this.showPossibleMoves(nextPlayer, player);
+                });
+            }
+        } else {
+            this.showCombatUI();
         }
+    }
+
+    showCombatUI() {
+        $('.board').hide();
+        $('.combat').show();
     }
 
     /**
