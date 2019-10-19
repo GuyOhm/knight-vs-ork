@@ -11,6 +11,7 @@ export default class Board {
     
     /**
     * This function generates a grid and an array of Squares based on the size
+    * 
     * @param {integer} size - Size of the board
     * @return {Square[]} squares - Array of Squares
     */ 
@@ -35,6 +36,7 @@ export default class Board {
     
     /**
     * This function randomly picks an element of an array and pops it
+    * 
     * @param {array} array
     * @param {boolean} pop - do we want to pop the element from the array (optional)
     * @return elt - the randomly picked element
@@ -53,6 +55,7 @@ export default class Board {
 
     /**
     * This function checks if 2 squares are nearby
+    * 
     * @param {Square} square1 - the first square
     * @param {Square} square2 - the second square
     * @return {boolean} - true if squares are nearby, false otherwise
@@ -66,6 +69,7 @@ export default class Board {
 
     /** 
     * This function places randomly players on the board
+    * 
     * @param {Player} players
     * @param {Square[]} squaresCopy
     */
@@ -87,6 +91,7 @@ export default class Board {
     
     /** 
     * This function places randomly weapons on the board
+    * 
     * @param {Weapon} weapons
     * @param {Square[]} squaresCopy
     */
@@ -100,6 +105,7 @@ export default class Board {
     
     /** 
     * This function places randomly walls on the board
+    * 
     * @param {interger} nbOfWalls
     * @param {Square[]} squaresCopy
     */
@@ -113,6 +119,7 @@ export default class Board {
 
     /**
     * This function get a Square from its row and col
+    * 
     * @param {interger} row
     * @param {interger} col
     * @return {Square}
@@ -129,6 +136,7 @@ export default class Board {
 
     /**
     * This function iterates towards a direction and find the accessibles squares from the initial square
+    * 
     * @param {Square} square - the initial square
     * @param {integer} distance - how far from the initial position we want to go
     * @param {{row:integer, col:integer}} direction - an object that represents a vector
@@ -149,6 +157,7 @@ export default class Board {
 
     /**
     * This function iterates towards all directions and find the accessibles squares from the initial square
+    * 
     * @param {Square} square - the initial square
     * @param {integer} distance - how far from the initial position we want to go
     * @return {Square[]} accessibleSquares
@@ -165,12 +174,16 @@ export default class Board {
     }
 
     /**
-    * This function highlights accessibles squares for a player to move to and set an event listener on each of them.
-    * When a square is clicked 
+    * This function highlights accessibles squares for a player to move to and set an event listener on each of them
+    * When a highlighted square is clicked the player moves and next turn is launched
+    * 
     * @param {Player} player
+    * @param {Player} nextPlayer
     */
     showPossibleMoves(player, nextPlayer) {
-        if(!this.areSquaresNearby(player.square, nextPlayer.square)) {
+        // Check if the players are nearby but not in diagonals
+        if(!(this.areSquaresNearby(player.square, nextPlayer.square) &&
+            (player.square.row === nextPlayer.square.row || player.square.col === nextPlayer.square.col))) {
             const initialSquare = player.square;
             const accessibleSquares = this.getAccessibleSquares(initialSquare, 3);
             for(let square of accessibleSquares) {
@@ -185,16 +198,70 @@ export default class Board {
             }
         } else {
             this.showCombatUI();
+            player.displayLife();
+            nextPlayer.displayLife();
+            player.displayWeapon();
+            nextPlayer.displayWeapon();
+            this.launchCombatTurn(nextPlayer, player);
         }
     }
 
+    /**
+     * This function hides the board and shows combat UI
+     */
     showCombatUI() {
         $('.board').hide();
         $('.combat').show();
     }
 
     /**
+     * This function handles combat for each turn
+     * 
+     * @param {Player} player 
+     * @param {Player} nextPlayer
+     */
+    launchCombatTurn(player, nextPlayer) {
+        // Disable buttons for the next player
+        $('.' + nextPlayer.cssClass + '-ui button').attr('disabled', true);
+        $('.' + nextPlayer.cssClass + '-ui button').css('background-color', 'rgba(0,0,255,0)');
+        // Set event listeners on current player's attack button
+        $('.' + player.cssClass + '-ui .attack-btn').on('click', () => {
+            player.attack(nextPlayer);
+            nextPlayer.displayLife();
+            this.disableButtons(player, nextPlayer);
+            if(nextPlayer.life <= 0) {
+                console.log(nextPlayer.cssClass + ' is dead!!!');
+                nextPlayer.die();
+                return;
+            }
+            this.launchCombatTurn(nextPlayer, player);
+        });
+        // Set event listeners on current player's defend button
+        $('.' + player.cssClass + '-ui .defend-btn').on('click', () => {
+            player.defend();
+            this.disableButtons(player, nextPlayer);
+            this.launchCombatTurn(nextPlayer, player);
+        });
+    }
+
+    /**
+     * This function handles buttons enabling
+     * 
+     * @param {Player} player 
+     * @param {Player} nextPlayer 
+     */
+    disableButtons(player, nextPlayer) {
+        // Cancel event listener on current player's buttons
+        $('.' + player.cssClass + '-ui .attack-btn').off('click');
+        $('.' + player.cssClass + '-ui .defend-btn').off('click');
+        // Reinstate next player's buttons
+        $('.' + nextPlayer.cssClass + '-ui button').attr('disabled', false);
+        $('.' + nextPlayer.cssClass + '-ui button').css('background-color', 'rgba(0,0,255,1)');
+    }
+
+    /**
     * This function cleans highlighted squares
+    * 
     * @param {Square[]} accessibleSquares
     */
     cleanSquares(accessibleSquares) {
@@ -206,7 +273,8 @@ export default class Board {
     }
 
     /**
-    * This function allows to swap weapons when a player is passing over another weapon.
+    * This function allows to swap weapons when a player is passing over another weapon
+    * 
     * @param {Square} initialSquare
     * @param {Square} destinationSquare
     * @param {Player} player
@@ -227,6 +295,7 @@ export default class Board {
 
     /**
     * This function gets all squares a player crossed when moving from one square to another
+    * 
     * @param {Square} initialSquare
     * @param {Square} destinationSquare
     * @return {Square[]} crossedSquares

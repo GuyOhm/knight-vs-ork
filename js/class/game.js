@@ -28,6 +28,9 @@ export default class Game {
         this.board.placeWalls(this.nbOfWalls, squaresCopy);
     }
 
+    /**
+     * This method starts the game by launching the first turn of play
+     */
     start() {
         this.board.showPossibleMoves(this.players[0], this.players[1]);
     }

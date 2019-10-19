@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet" type="text/css">
+        <title>Knight vs Ork - A turn based board game</title>
+    </head>
+    <body>
+        <section class="board"></section>
+        <section class="combat">
+            <div class="combat-ui">
+                <div class="info-box">
+                    <div id="info-box-knight">
+                        <div id="knight-life-bar">
+                            <div id="knight-life"></div>
+                        </div> 
+                        <div id="knight-weapon-info"></div>    
+                    </div>
+                    <div id="info-box-orc">
+                        <div id="orc-weapon-info"></div>
+                        <div id="orc-life-bar">
+                            <div id="orc-life"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="player-container">
+                    <div class="knight-ui">
+                        <div class="player-img">
+                            <div class="knight-char"></div>
+                        </div>
+                        <button class="attack-btn">ATTACK</button>
+                        <button class="defend-btn">DEFEND</button>
+                    </div>
+                    <div class="orc-ui">
+                        <div class="flip player-img">
+                            <div class="orc-char"></div>
+                        </div>
+                        <button class="attack-btn">ATTACK</button>
+                        <button class="defend-btn">DEFEND</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="module" src="../js/index.js"></script>
+    </body>
+</html>

@@ -1,15 +1,15 @@
 {
-  "name": "shootout",
+  "name": "knight-vs-ork",
   "version": "1.0.0",
   "description": "Turn based board game.",
-  "main": "shootout.html",
+  "main": "knightvsork.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "./node_modules/.bin/esdoc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GuyOhm/shootout.git"
+    "url": "git+https://github.com/GuyOhm/knight-vs-ork.git"
   },
   "keywords": [
     "game",
@@ -19,9 +19,9 @@
   "author": "Guillaume Ricciuti with the help of Julien Sosthène :)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GuyOhm/shootout/issues"
+    "url": "https://github.com/GuyOhm/knight-vs-ork/issues"
   },
-  "homepage": "https://github.com/GuyOhm/shootout#readme",
+  "homepage": "https://github.com/GuyOhm/knight-vs-ork#readme",
   "devDependencies": {
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0"

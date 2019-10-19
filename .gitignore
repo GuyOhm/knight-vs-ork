@@ -1,3 +1,4 @@
 node_modules/
 docs/
 .eslintrc.js
+.vscode/
