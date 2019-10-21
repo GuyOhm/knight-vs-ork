@@ -106,7 +106,7 @@ export default class Board {
     /** 
     * This function places randomly walls on the board
     * 
-    * @param {interger} nbOfWalls
+    * @param {integer} nbOfWalls
     * @param {Square[]} squaresCopy
     */
     placeWalls(nbOfWalls, squaresCopy) {
@@ -120,8 +120,8 @@ export default class Board {
     /**
     * This function get a Square from its row and col
     * 
-    * @param {interger} row
-    * @param {interger} col
+    * @param {integer} row
+    * @param {integer} col
     * @return {Square}
     */
     getSquare(row, col) {
