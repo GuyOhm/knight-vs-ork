@@ -11,3 +11,23 @@ To be able to run the game locally, you need to install :
 
 - [nmp](https://docs.npmjs.com/cli/install) to install http-server module.
 - [http-server](https://www.npmjs.com/package/http-server) to be able to serve files locally and don't get error due to [CORS policy.](https://developer.mozilla.org/fr/docs/Web/HTTP/CORS)
+
+### Launch the game
+To launch the game:
+
+- first run `http server` in your CLI.
+- then open `knighvsork.html` in your browser.
+
+## Documentation
+You can generate full documentation thanks to [ESDoc](https://www.npmjs.com/package/esdoc).
+
+- First, install [ESDoc](https://www.npmjs.com/package/esdoc) module.
+- You can add the ESDoc command to your scripts in package.json file:
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/esdoc"
+  },
+```
+- Generate the documentation with `npm run docs` in your CLI.
+- Open document like this: `open docs/index.html`.
