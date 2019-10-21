@@ -4,8 +4,8 @@ import Weapon from './weapon.js';
 * Class that represents a player
 */
 export default class Player {
-    constructor(square, cssClass) {
-        this.square = square;
+    constructor(cssClass) {
+        this.square = null;
         this.cssClass = cssClass;
         this.life = 100;
         this.weapon = new Weapon('Dagger', 10, 'dagger');

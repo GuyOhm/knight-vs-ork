@@ -6,8 +6,8 @@ export default class Game {
     constructor () {
         this.board = new Board(10);
         this.players = [
-            new Player(null, 'knight'),
-            new Player(null, 'orc')
+            new Player('knight'),
+            new Player('orc')
         ];
         this.weapons = [
             new Weapon('Sword', 13, 'sword'),
