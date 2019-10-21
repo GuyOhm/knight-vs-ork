@@ -16,7 +16,11 @@ To be able to run the game locally, you need to install :
 To launch the game:
 
 - first run `http server` in your CLI.
+<<<<<<< HEAD
 - then open `knightvsork.html` in your browser.
+=======
+- then open `knighvsork.html` in your browser.
+>>>>>>> 7ce88a505eddb793054374819274455ad1661011
 
 ## Documentation
 You can generate full documentation thanks to [ESDoc](https://www.npmjs.com/package/esdoc).
